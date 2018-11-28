@@ -1,0 +1,72 @@
+<div id="header">
+  <div class="top">
+    <div class="wrapper">
+      <div class="top_logo">
+        <a href="<c:url value='/newRegistList.do'/>"><img src="/images/logo.png" alt="SK렌터카 신규등록관리시스템"></a>
+      </div>
+      <div class="utility">
+        <ul>
+          <li><c:out value="${name}"/></li>
+          <li class="bar"> | </li>
+          <li><a href="<c:url value='/actionLogout.do'/>">로그아웃</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="header_inner">
+    <div class="wrapper">
+      <ul class="gnb">
+        <!-- IVY STYLE -->
+        <!-- 선택된 메뉴 li class="on" 추가 -->
+        <li class="m1">
+          <a href="/newRegist">
+            <img class="off" src="/images/gnb/gnb_m1.gif" alt="신규등록" />
+            <img class="on" src="/images/gnb/gnb_m1_on.gif" alt="신규등록" />
+          </a>
+        </li>
+        <!-- LOOKBOOK -->
+        <!-- 선택된 메뉴 li class="on" 추가 -->
+        <li class="m2">
+          <a href="/userManage">
+            <img class="off" src="/images/gnb/gnb_m2.gif" alt="기초 데이터 등록" />
+            <img class="on" src="/images/gnb/gnb_m2_on.gif" alt="기초 데이터 등록" />
+          </a>
+          <ul class="dep2">
+            <!-- 선택된 메뉴 li class="on" 추가 -->
+            <li>
+              <a href="/userManage">
+                <img class="off2" src="/images/gnb/gnb_m2_m1_off.gif" alt="회원관리" />
+                <img class="on2" src="/images/gnb/gnb_m2_m1_on.gif" alt="회원관리" />
+              </a>
+            </li>
+            <li>
+              <a href="/orderManage.do">
+                <img class="off2" src="/images/gnb/gnb_m2_m2_off.gif" alt="발주처 관리" />
+                <img class="on2" src="/images/gnb/gnb_m2_m2_on.gif" alt="발주처 관리" />
+              </a>
+            </li>
+            <li>
+              <a href="/releaseManage.do">
+                <img class="off2" src="/images/gnb/gnb_m2_m3_off.gif" alt="출고지 관리" />
+                <img class="on2" src="/images/gnb/gnb_m2_m3_on.gif" alt="출고지 관리" />
+              </a>
+            </li>
+            <li>
+              <a href="/carManage.do">
+                <img class="off2" src="/images/gnb/gnb_m2_m4_off.gif" alt="차량 DATA 관리" />
+                <img class="on2" src="/images/gnb/gnb_m2_m4_on.gif" alt="차량 DATA 관리" />
+              </a>
+            </li>
+            <li>
+              <a href="/deliveryManage.do">
+                <img class="off2" src="/images/gnb/gnb_m2_m5_off.gif" alt="번호판 배송지 관리" />
+                <img class="on2" src="/images/gnb/gnb_m2_m5_on.gif" alt="번호판 배송지 관리" />
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>

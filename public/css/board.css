@@ -1,0 +1,12 @@
+/* page list */
+.page-wrap { width:100%; margin-top:20px; text-align:center; height:25px;}
+
+.page-list { display:inline; width:996px; text-align:center; height:25px;  }
+.page-list li { display:inline; *zoom:1; margin:0 2px; *vertical-align:top; font-family:"�뗭�", "援대┝",Arial, Helvetica, sans-serif; height:25px; vertical-align:top; font-size:13px; *font-size:12px; }
+.page-list li a { display:inline-block; *display:inline; *zoom:1; padding:5px 5px; *padding:6px 5px; min-width:16px; *width:16px; text-decoration:none; border:1px solid #ededed; }
+.page-list li a img { vertical-align:middle;}
+.page-list li.page1 a { padding:0; width:24px;}
+.page-list li.page a:hover { background:#ea002c; color:#ffffff; }
+.page-list li.page.now a { background:#ea002c; color:#ffffff; }
+
+.clearBoth { clear: both;}

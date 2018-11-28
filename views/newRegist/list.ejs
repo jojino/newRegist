@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-ｅquiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SK렌터카 - 신규등록 관리 시스템</title>
+	<link type="text/css" rel="stylesheet" href="/css/reset.css">
+	<link type="text/css" rel="stylesheet" href="/css/main.css">
+	<link type="text/css" rel="stylesheet" href="/css/style.css">
+	<link type="text/css" rel="stylesheet" href="/css/board.css">
+	<link type="text/css" rel="stylesheet" href="/css/table.css">
+	<link type="text/css" rel="stylesheet" href="/css/common.css">
+	<link type="text/css" rel="stylesheet" href="/css/jquery-ui.css"><!-- 달력 css -->
+
+	<script type="text/javascript" src="/js/gnb.js"></script>
+	<script language="javascript" src="/js/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.js"></script><!-- 달력 js -->
+
+</head>
+<body>
+	<% include ../common/header %>
+
+<script>gnb(1,0);</script>
+<script type="text/javascript">
+
+<!-- //달력함수 -->
+$(function() {
+
+    $("#datepicker1").datepicker();
+    $("#datepicker1").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker1").datepicker("option", "changeMonth", true);
+    $("#datepicker1").datepicker("option", "changeYear", true);
+
+    $("#datepicker2").datepicker();
+    $("#datepicker2").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker2").datepicker("option", "changeMonth", true);
+    $("#datepicker2").datepicker("option", "changeYear", true);
+
+    $("#datepicker3").datepicker();
+    $("#datepicker3").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker3").datepicker("option", "changeMonth", true);
+    $("#datepicker3").datepicker("option", "changeYear", true);
+
+    $("#datepicker4").datepicker();
+    $("#datepicker4").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker4").datepicker("option", "changeMonth", true);
+    $("#datepicker4").datepicker("option", "changeYear", true);
+
+    $("#datepicker5").datepicker();
+    $("#datepicker5").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker5").datepicker("option", "changeMonth", true);
+    $("#datepicker5").datepicker("option", "changeYear", true);
+
+    $("#datepicker6").datepicker();
+    $("#datepicker6").datepicker("option", "dateFormat", "yymmdd");
+    $("#datepicker6").datepicker("option", "changeMonth", true);
+    $("#datepicker6").datepicker("option", "changeYear", true);
+
+  	 //fn_searchModel2('${modCd}');
+});
+
+
+var conNo;	// 계약번호
+var carSt;	// 출고상태
+
+// 엑셀 업로드 팝업창 호출
+function fn_excel_upload() {
+
+	url = "<c:url value='excelUp.do'/>";
+
+	open(url, "confirm", "toolbar=no, location=no, staus=no, menubar=no, scrollbars=no, resizable=no, width=400, height=150");
+}
+
+// 엑셀 다운로드 이벤트
+function fn_excel_down() {
+
+	var frm = document.forms.listForm;
+	var resultCnt = registList;
+    if (resultCnt < 1) {
+    	alert("데이터가 없습니다.");
+    } else {
+		frm.action = "<c:url value='excelDown.do'/>";
+		frm.submit();
+	}
+}
+
+// 선택된 건의 계약번호를 가져오는 이벤트
+function fn_get_conNo(param, procSt) {
+	conNo = param;
+	carSt = procSt;
+}
+
+// 출고발주 이벤트
+function fn_newRegist_update() {
+
+	var chk = $("input:radio[name='chk[]']").is(":checked");
+
+	if(!chk)  {
+		alert("선택된 항목이 없습니다.");
+		return;
+	} else {
+		// 선택된 건이 출고등록이 가능한지 확인
+		if(carSt == "신규발주") {
+			url = "<c:url value='actionRegist.do?idx='/>"+conNo;
+			open(url, "confirm", "toolbar=no, location=no, staus=no, menubar=no, scrollbars=no, resizable=no, width=400, height=150");
+		} else if(carSt == "등록확인") {
+			alert("등록확인 상태는 출고등록을 할 수 없습니다.");
+			abort;
+		} else {
+			if(confirm("이미 출고상태입니다. 수정을 하시겠습니까?")) {
+				url = "<c:url value='actionRegist.do?idx='/>"+conNo;
+				open(url, "confirm", "toolbar=no, location=no, staus=no, menubar=no, scrollbars=no, resizable=no, width=400, height=150");
+			} else {
+				return;
+			}
+		}
+	}
+}
+
+// 등록확인 이벤트
+function fn_check_wonbu() {
+	var chk = $("input:radio[name='chk[]']").is(":checked");
+
+	// 선택된 건이 없으면
+	if(!chk) {
+		alert("선택된 항목이 없습니다.");
+		return;
+	} else {
+		// 선택된 건의 출고등록인지 확인
+		if(carSt == "출고등록") {
+			$.ajax({
+				url:"<c:url value='/checkWonbu.do'/>",
+				data:{"conNo":conNo},
+				beforeSend : function(xhr)
+				{
+					/*데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				action:"post",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success:function(data) {
+					var result = new Array();
+					result = data.result.wonbuResult;
+					 if(result == 1) {
+						alert("등록 확인 되었습니다.");
+						document.location.reload();
+					} else {
+						alert("등록 확인에 실패하였습니다.");
+						return;
+					}
+				},
+				error: function(request, status, error) {
+					alert("에러 발생!!!");
+					alert(request.status + " " + request.responseText + " " + error);
+				}
+			});
+		} else {
+			alert("등록확인은 출고상태일 경우만 가능합니다.");
+			abort;
+		}
+	}
+}
+
+/* ********************************************************
+ * 페이징 처리 함수
+ ******************************************************** */
+function fn_egov_pageview(pageNo){
+
+	document.listForm.pageIndex.value = pageNo;
+	document.listForm.action = "<c:url value='/newRegistList.do'/>";
+   	document.listForm.submit();
+
+
+}
+
+// 등록보고서 호출 이벤트
+function fn_rexpert(idx) {
+
+	url = "<c:url value='showRexpert.do?conNo='/>"+idx;
+	open(url, "confirm", "toolbar=no, location=no, staus=no, menubar=no, scrollbars=no, resizable=no, width=830, height=740");
+
+
+}
+
+
+
+// 모델 보여주기
+ function fn_searchModel() {
+	// 모델 코드를 가져옴
+	var makerCd = $("#makerCd option:selected").val();
+
+	// 모델코드가 빈 값이 아니면 2번쨰 셀렉트박스의 속성을 풀어줌
+	if(makerCd != null) {
+		$("select[name=modelCd]").removeAttr("disabled");
+
+		$.ajax({
+			type:"POST",
+			url: "<c:url value='/searchModel.do'/>",
+			data:{"codeId":makerCd},
+			beforeSend : function(xhr)
+			{
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			enctype: "multipart/form-data",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			dataType:"json",
+			success: function(data) {
+				// 받아온 JSON 데이터를 배열에 담는다.
+				var result = new Array();
+				result = data.result.modelList;
+				// 데이터가 있으면 뿌려준다.
+				 if(result.length>0) {
+
+					$("#modelCd").find("option").remove().end().
+					append("<option value=''>모델 선택</option>");
+
+					$.each(result, function(i) {
+						if(result[i].rsinfo.MOD_GB.value != 'N') {
+							$("#modelCd").append("<option value='" + result[i].rsinfo.MOD_CD.value + "' >" +
+									result[i].rsinfo.MOD_NM.value+'</option>');
+						}
+					});
+				} else {
+					$("#modelCd").find("option").remove().end().
+					append("<option value=''>모델 없음</option>");
+					return;
+				}
+			},
+			error: function(request, status, error) {
+				alert("에러 발생!!!");
+			}
+		});
+	}
+}
+
+//검색 후 모델 보여주기
+ function fn_searchModel2(modCd) {
+	// 모델 코드를 가져옴
+	var makerCd = $("#makerCd option:selected").val();
+
+	// 모델코드가 빈 값이 아니면 2번쨰 셀렉트박스의 속성을 풀어줌
+	if(makerCd != null) {
+		$("select[name=modelCd]").removeAttr("disabled");
+
+		$.ajax({
+			type:"POST",
+			url: "<c:url value='/searchModel.do'/>",
+			data:{"codeId":makerCd},
+			beforeSend : function(xhr)
+			{
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			enctype: "multipart/form-data",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			dataType:"json",
+			success: function(data) {
+				// 받아온 JSON 데이터를 배열에 담는다.
+				var result = new Array();
+				result = data.result.modelList;
+				// 데이터가 있으면 뿌려준다.
+				 if(result.length>0) {
+
+					$("#modelCd").find("option").remove().end().
+					append("<option value=''>모델 선택</option>");
+
+					$.each(result, function(i) {
+						if(result[i].rsinfo.MOD_CD.value == modCd) {
+							$("#modelCd").append("<option value='" + result[i].rsinfo.MOD_CD.value + "' selected=true>" +
+									result[i].rsinfo.MOD_NM.value+'</option>');
+						} else {
+							$("#modelCd").append("<option value='" + result[i].rsinfo.MOD_CD.value + "' >" +
+									result[i].rsinfo.MOD_NM.value+'</option>');
+						}
+					});
+				} else {
+					$("#modelCd").find("option").remove().end().
+					append("<option value=''>모델 없음</option>");
+					return;
+				}
+			},
+			error: function(request, status, error) {
+				alert("에러 발생!!!");
+			}
+		});
+	}
+}
+
+
+
+// 검색 이벤트
+function fn_search() {
+
+	document.listForm.pageIndex.value = 1;
+	document.listForm.action = "<c:url value='/newRegistList.do'/>";
+   	document.listForm.submit();
+}
+
+// 검색 데이터 초기화
+function fn_search_reset() {
+
+	var frm = document.listForm;
+
+	frm.corpCd.value = "";
+	frm.conNo.value = "";
+	frm.vidNo.value = "";
+	frm.carNo.value = "";
+	frm.makerCd.value = "";
+	frm.modelCd.value = "";
+	frm.user.value = "";
+	frm.relCd.value = "";
+	frm.conDtFrom.value = "";
+	frm.conDtTo.value = "";
+	frm.relDtFrom.value = "";
+	frm.relDtTo.value = "";
+	frm.regDtFrom.value = "";
+	frm.regDtTo.value = "";
+	frm.cusNm.value = "";
+	frm.deliverCd.value = "";
+}
+
+function fn_show_datepicker(id) {
+
+	$("#"+id+"").css('background', 'white');
+}
+
+</script>
+
+<!-- Container -->
+<div id="container">
+	<div class="wrapper">
+		<!-- Contents -->
+		<div id="contents">
+			<form id="listForm" name="listForm" method="post" >
+			<!-- commandName은 vo객체를 말한다. form tag를 사용한 부분과의 매핑을 위해 필요한 옵션.
+     		vo의 변수와 form에서 같은 name을 서로 매핑시켜 getter와 setter를 사용한다. -->
+			<!-- 검색영역 -->
+			<div class="rental_search">
+					<div class="rq_top">
+						<ul>
+							<li>
+								<span>발 주 처</span>
+										<select name="corpCd"  title="corp">
+											<option value="sk">SK렌터카</option>
+										</select>
+							</li>
+
+							<li>
+								<span>계약번호</span>
+								<input name="conNo" type="text" title="conNo"/>
+							</li>
+							<li>
+								<span>차대번호</span>
+								<input name="vidNo" type="text" title="vidNo"/>
+							</li>
+							<li>
+								<span>차량번호</span>
+								<input name="carNo" type="text" title="carNo"/>
+							</li>
+							<li class="li_half">
+								<span>제조사·모델</span>
+								<select name="makerCd"  title="makerCd"  onchange="javascript:fn_searchModel();">
+									<option value="">제조사 선택</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+								</select>
+								<select name="" title="모델">
+									<option value="">모델 선택</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+								</select>
+							</li>
+							<li>
+								<span>고 객 명</span>
+								<input name="user" type="text" title="user"/>
+							</li>
+							<li>
+								<span>출 고 장</span>
+								<select name="relCd"  title="relCd">
+									<option value="">출고장 선택</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+								</select>
+							</li>
+							<li>
+								<span>계약일자</span>
+								<input name="conDtFrom" type="text" title="conDtFrom" id="datepicker1" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+								<span class="term">~</span>
+								<input name="conDtTo" type="text" title="conDtTo" id="datepicker2" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+							</li>
+							<li>
+								<span>출고일자</span>
+								<input name="relDtFrom" type="text" title="relDtFrom" id="datepicker3" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+								<span class="term">~</span>
+								<input name="relDtTo" type="text" title="relDtTo" id="datepicker4" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+							</li>
+							<li>
+								<span>등록일자</span>
+								<input name="regDtFrom" type="text" title="regDtFrom" id="datepicker5" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+								<span class="term">~</span>
+								<input name="regDtTo" type="text" title="regDtTo" id="datepicker6" class="calender" readonly="readonly" onchange="javascript:fn_show_datepicker(id); return false;"/>
+								<!-- 달력 id="datepicker1"부터 순서로 추가, class="calender" 추가 -->
+							</li>
+							<li>
+								<span>고 객 사</span>
+								<input name="cusNm" type="text" title="cusNm"/>
+							</li>
+							<li class="li_half">
+								<span>번호판 배송지</span>
+								<select name="deliverCd"  title="deliverCd">
+									<option value="">배송지 선택</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+									<option value="">목록</option>
+								</select>
+							</li>
+							<li class="btns_right">
+								<input type="image" src="/images/btn/btn_search_reset.png" alt="검색 초기화" title="검색 초기화" onclick="javascript:fn_search_reset(); return false;">
+								<input type="image" src="/images/btn/btn_search_red.png" alt="검색" title="검색" onclick="javascript:fn_search(); return false;">
+							</li>
+						</ul>
+					</div>
+
+				<p><tt id="results"></tt></p>
+			</div>
+			<!-- 검색영역 -->
+
+			<!-- 버튼 및 정렬 -->
+			<div class="search_list">
+				<input type="hidden" name="userId"/>
+				<div class="float_l">
+					<input type="image" src="/images/btn/btn_newOrder.png" alt="신규 발주" title="신규 발주" onclick="javascript:fn_excel_upload(); return false;" />
+					<input type="image" src="/images/btn/btn_releaseRegister.png" alt="출고 등록" title="출고 등록" onclick="javascript:fn_newRegist_update(); return false;"/>
+					<input type="image" src="/images/btn/btn_resisterCheck.png" alt="등록 확인" title="등록 확인" onclick="javascript:fn_check_wonbu(); return false;" />
+					<input type="image" src="/images/btn/btn_excelSave.png" alt="엑셀 저장" title="엑셀 저장" onclick="javascript:fn_excel_down(); return false;"/>
+				</div>
+				<div class="float_r">
+					<select name="sortType" title="sortType" onchange="javascript:fn_search(); return false;">
+						<option value="" selected="selected">정렬순서</option>
+						<option value="REG_DT">등록일순</option>
+						<option value="REL_DT">출고일자순</option>
+						<option value="CON_DT">계약일자순</option>
+					</select>
+					<select name="recordCountPerPage" title="recordCountPerPage" onchange="javascript:fn_search(); return false;">
+						<option value="20" selcted="selected">20개씩보기</option>
+						<option value="40">40개씩보기</option>
+						<option value="60">60개씩보기</option>
+						<option value="80">80개씩보기</option>
+						<option value="100">100개씩보기</option>
+					</select>
+					<input type="image" src="/images/btn/btn_modify.png" alt="수정" title="수정" />
+					<input type="image" src="/images/btn/btn_delete.png" alt="삭제" title="삭제" />
+				</div>
+			</div>
+			<div class="clearBoth"></div>
+			<!-- //버튼 및 정렬 -->
+
+
+			<!-- 테이블 영역 -->
+			<div class="reser-txt pt10">
+				<ul id="totCnt">
+					<li class="txt">총 건이 조회 되었습니다.</li>
+				</ul>
+			</div>
+			<div class="page_top_1">
+				<table class="tblinset">
+					<colgroup>
+						<col width="3%"/>
+						<col width="6%"/>
+						<col width="11%"/>
+						<col width="6%"/>
+						<col width="8%"/>
+						<col width="11%"/>
+						<col width="5%"/>
+						<col width="5%"/>
+						<col width="5%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+<!-- 						<col width="5%"/>
+						<col width="5%"/>
+						<col width="5%"/>
+						<col width="5%"/> -->
+						<col width="9%"/>
+						<col width="7%"/>
+						<col width="7%"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>No</th>
+							<th>발주사</th>
+							<th>계약번호</th>
+							<th>상태</th>
+							<th>제조사·모델</th>
+							<th>차대번호</th>
+							<th>차량번호</th>
+							<th>고객사</th>
+							<th>출고장</th>
+							<th>계약일자</th>
+							<th>출고일자</th>
+							<th>등록일자</th>
+<!-- 							<th>취득세</th>
+							<th>증지대</th>
+							<th>인지대</th>
+							<th>소계</th> -->
+							<th>번호판 배송지</th>
+							<th>임시번호판</th>
+							<th>등록보고서</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="" value=""/></td>
+							<td>SK렌터카</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>서울시 강남구 삼성동 1234</td>
+							<td><input type="image" src="images/btn/btn_print.gif" alt="인쇄하기" title="인쇄하기"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- page nav -->
+				<div class="page-wrap">
+				<ul class="page-list">
+					<li class="page1 pgEmpty"><a href="#"><img src="images/btn/btn_first.gif" alt="first"></a></li>
+					<li class="page1 pgEmpty"><a href="#"><img src="images/btn/btn_prev.gif" alt="prev"></a></li>
+					<!-- 선택된 page li class="now" 추가 / Data 갯수만큼 li 추가 -->
+					<li class="page now"><a href="#">1</a></li>
+					<li class="page"><a href="#">2</a></li>
+					<li class="page"><a href="#">3</a></li>
+					<li class="page1"><a href="#"><img src="images/btn/btn_next.gif" alt="next"></a></li>
+					<li class="page1"><a href="#"><img src="images/btn/btn_last.gif" alt="last"></a></li>
+				</ul>
+			</div>
+				<!-- //page nav -->
+			</div>
+			<!-- //테이블 영역 -->
+		</form>
+		</div>
+
+		<!-- Contents -->
+	</div>
+	<!-- //Wrapper -->
+</div>
+<% include ../common/footer %>
+</body>
+</html>

@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+/* ftp용량 절감을 위해 웹폰트 관련 경로를 변경하였습니다. 소스를 넘길 때는 webfont 폴더를 꼭 복사하시고 경로 변경 해주세요.*/
+/* IE 9 이하버전에서는 font-weight: 800(extrabold)이 반영되지 않음. */
+
+@font-face {
+	font-family: "Nanum Gothic";
+	font-style: normal;
+	font-weight: 400;
+	src: url("webfont/NanumGothic-Regular.eot");
+	src: url("webfont/NanumGothic-Regular.eot?#iefix") format("embedded-opentype"), url("webfont/NanumGothic-Regular.woff2") format("woff2"), url("webfont/NanumGothic-Regular.woff") format("woff"), url("webfont/NanumGothic-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Nanum Gothic";
+	font-style: normal;
+	font-weight: 700;
+	src: url("webfont/NanumGothic-Bold.eot");
+	src: url("webfont/NanumGothic-Bold.eot?#iefix") format("embedded-opentype"), url("webfont/NanumGothic-Bold.woff2") format("woff2"), url("webfont/NanumGothic-Bold.woff") format("woff"), url("webfont/NanumGothic-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Nanum Gothic";
+	font-style: normal;
+	font-weight: 800;
+	src: url("webfont/NanumGothic-ExtraBold.eot");
+	src: url("webfont/NanumGothic-ExtraBold.eot?#iefix") format("embedded-opentype"), url("webfont/NanumGothic-ExtraBold.woff2") format("woff2"), url("webfont/NanumGothic-ExtraBold.woff") format("woff"), url("webfont/NanumGothic-ExtraBold.ttf") format("truetype");
+}
+
+

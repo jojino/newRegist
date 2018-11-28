@@ -1,0 +1,257 @@
+@import "fonts.css";
+body{font-size:12.5px;font-family:'Nanum Gothic',"나눔고딕",MalgunGothic,dotum;color:#333;background:#fff}
+a{text-decoration:none;color:#666}
+strong{font-weight:700}
+input[type=text],select{color:#333;font-family:'Nanum Gothic',"나눔고딕",MalgunGothic,dotum,Dotum;vertical-align:middle}
+input{margin:0;padding:0}
+.input{ border:1px solid #dadada; padding:3px 1px; *padding:3px 1px;}
+.c333{color:#333}
+.wrapper{width:996px;margin:0 auto}
+
+.pt10{ padding-top:10px;}
+.pt20{ padding-top:20px;}
+.pt30{ padding-top:30px;}
+.pt40{ padding-top:40px;}
+.pb15{ padding-bottom:15px;}
+.pb30{ padding-bottom:30px;}
+.m0 { margin:0;}
+
+
+#header {background-color:#e51837; max-height: 90px !important; min-width: 996px;}
+#header .top{height:90px; background-color: #fff;}
+#header .top .top_logo{float:left; margin-top:20px;}
+#header .top ul{float:left;margin-top:65px}
+#header .top ul li{float:left;padding-left:5px;margin-right:1px}
+#header .top ul li:first-child{font-size:11px;padding:0;background:none}
+#header .top ul li a{font-size:11px;color:#333}
+#header .top .utility{float:right}
+#header .top .utility .bar{font-size:10px;color:#abadb3;margin-top:1px;}
+
+#header .header_inner { position:relative; top:0; left:50%; width:996px; min-width:996px; margin-left:-498px; height:40px; }
+#header .header_inner .gnb { position:absolute; z-index:2; top:0px; left:0; }
+#header .header_inner .gnb li {float:left;}
+#header .header_inner .gnb > li {position:relative; height:34px;}
+#header .header_inner .gnb li a {display:inline-block;}
+#header .header_inner .gnb li a .on {display:none;}
+#header .header_inner .gnb li.on a .off {display:none;}
+#header .header_inner .gnb li.on a .on {display:block;}
+#header .header_inner .gnb li.m1 ul {width:748px; left:0;}
+#header .header_inner .gnb li.m2 ul {width:996px; left:-152px; padding-left:150px;}
+#header .header_inner .gnb li .dep2 { display:none; position:absolute; top:40px; height:35px; border-bottom:1px solid #dddddd; box-sizing:border-box; background-color:#ffffff; }
+#header .header_inner .gnb li.on .dep2 {display:block;}
+#header .header_inner .gnb li .dep2 li {}
+#header .header_inner .gnb li .dep2 li > a {height:70px; display:inline-block;}
+#header .header_inner .gnb li .dep2 li > a .on2 {display:none;}
+#header .header_inner .gnb li .dep2 li.on a .off2 {display:none;}
+#header .header_inner .gnb li .dep2 li.on a .on2 {display:block;}
+#header .header_inner ul.link { position:absolute; top:80px; right:7px; }
+#header .header_inner ul.link li { display:inline-block; float:left; }
+#header .dep2_bg { display:none; position:absolute; z-index:1; top:130px; left:0; width:100%; height:35px; border-bottom:1px solid #dddddd; box-sizing:border-box; background-color:#ffffff; }
+
+
+#container{display:inline-block;width:100%;padding:20px 0 50px}
+#container.membership{border-top:10px solid #e51837;}
+
+
+#contents{position:relative;float:left;width:100%;margin-left:0px}
+#contents.txtarea1{margin-left:0;}
+#contents .orange{color:#ff7b14}
+#contents p{line-height:20px}
+#contents p.t_21{margin-left:21px}
+#contents p a img{vertical-align:middle}
+
+#contents .chart1{position:relative;padding-bottom:46px; margin-left:33px; }
+#contents .chart1 .btn01{position:absolute;z-index:5;top:100px;left:580px}
+
+#contents .ptbl01 .bgw{background:#fff}
+#contents .list63{padding:15px 0 0 16px}
+#contents .list63 li+li{padding-top:7px}
+#contents .map2{margin:13px 0 9px;}
+.sect{display:table;padding:15px 0 14px 103px;min-height:75px;width:610px;margin-left:30px;}
+.sect.sect1{background:url(../images/icon/008.png) no-repeat 0 15px}
+.sect.sect2{background:url(../images/icon/009.png) no-repeat 0 15px}
+.sect.sect3{background:url(../images/icon/010.png) no-repeat 0 15px}
+.sect.sect4{background:url(../images/icon/011.png) no-repeat 0 15px}
+.sect > div{display:table-cell;vertical-align:middle}
+.sect .h2{color:#e51937;font-weight:bold}
+.sect .rd1{color:#e51937}
+#contents .sect p.f11{margin-top:5px;font-size:11px;line-height:15px}
+#contents .page_top{overflow:hidden;margin-bottom:25px}
+#contents .page_top_1{margin-bottom:30px}
+#contents .page_top_2{margin-bottom:20px}
+#contents .page_top_3{margin-bottom:10px}
+#contents .page_top_4{margin-bottom:70px}
+#contents .page_top_5{margin-bottom:25px}
+#contents .page_top_6{margin-bottom:40px}
+#contents .page_top_7{margin-bottom:27px}
+#contents .page_top_8{margin-bottom:4px}
+#contents .page_top .nav{float:right;margin-top:0px;font-size:11px}
+#contents .page_top .nav a{margin-right:2px;font-size:11px;color:#666; line-height:1.2em; display:inline-block;}
+#contents .page_top .nav a.home{float:left;height:12px;line-height:1.2em;padding-left:17px;margin-right:4px;background:url("../images/icon/home.jpg") no-repeat;}
+#contents .page_top h2{margin-top:15px}
+#contents .page_top span{display:block;margin-top:9px}
+
+
+/* 검색창 */
+#contents .rental_search{margin-top:10px; height: auto;}
+#contents .rental_search .rq_top{text-align:left; border:1px solid #dddddd; background-color:#fafafa; padding:10px 0px 10px 30px; overflow:hidden;}
+#contents .rental_search .rq_top ul li {float:left;margin-top:8px; padding-right:20px; width: 25%; height:35px; box-sizing:border-box; }
+#contents .rental_search .rq_top ul li.li_half {width: 50%;}
+#contents .rental_search .rq_top ul li nth-child(4n+0) {padding-right:0px;}
+#contents .rental_search .rq_top ul li a {color:#333;}
+#contents .rental_search .rq_top ul li span{float:left; width:77px; margin-top:6px; font-weight:800; line-height:1.2em;}
+#contents .rental_search .rq_top ul li select{float:left; width:135px;height:27px; margin-right:5px; border:1px solid #dbdbdb;vertical-align:top}
+#contents .rental_search .rq_top ul li input[type=text]{float:left; width:129px;height:20px;padding:2px;vertical-align:top;border:1px solid #dbdbdb}
+#contents .rental_search .rq_top ul li input[type=image]{vertical-align:top; margin-right:3px;}
+#contents .rental_search .rq_top ul li input.calender { width:56px !important; font-size:11px; background:url("../images/icon/calendar.png") no-repeat right; background-color: #fff; cursor: pointer; background-position: 41px;}
+#contents .rental_search .rq_top ul li .term{width:10px; text-align: center;}
+#contents .rental_search .rq_top ul li div{overflow:hidden;margin-top:12px;margin-bottom:-12px;*margin-bottom:0;background:#f3f3f3}
+#contents .rental_search .rq_top ul li div p{margin:25px 0 25px 30px;font-size:12px;line-height:18px}
+#contents .rental_search .rq_top ul li.text_cn{text-align:center;}
+#contents .rental_search .rq_top ul li.btns_right{text-align:right; float:right;}
+
+/* 테이블 박스 */
+div.tblinset_box {flot:left; min-width: 650px; max-width:650px; float: left;  }
+
+
+/* 등록박스 */
+#contents .register {}
+#contents .register .middle_space { display: block; height: 15px;text-align: center; }
+#contents .register .register_btn { display: block; width:100%; text-align: center; margin:0 auto; padding-top: 10px;}
+
+#contents .register .register_rig{position:relative;float:right;width:285px;margin:20px 0 0 15px; overflow:hidden;display:block;padding:20px; background-color: #fff; border: 1px solid #e51937; }
+#contents .register .register_rig ul{width:100%;border-top:1px solid #dadada; background-color: #fff;}
+#contents .register .register_rig ul li{height:29px;border-bottom:1px solid #dadada}
+#contents .register .register_rig ul li span:first-child{float:left;width:90px;height:20px;padding-top:9px;border-right:1px solid #dadada;text-align:center;background-color: #f5f5f5;}
+
+#contents .register .register_half{position:relative;float:left;width:400px;margin:20px 0 0 15px; overflow:hidden;display:block;padding:20px; background-color: #fff; border: 1px solid #e51937; }
+#contents .register .register_half .register_tit{ display: block; height: 21px;text-align: center;padding-top: 18px; font-weight: bold; font-size: 13px;background-color: #f5f5f5}
+#contents .register .register_half ul{width:100%;border-top:1px solid #dadada; background-color: #fff;}
+#contents .register .register_half ul li{border-bottom:1px solid #dadada}
+#contents .register .register_half .register_listBox {overflow:hidden; height: 800px;position:relative;}
+#contents .register .register_half ul li span:first-child{width:100%;height:20px;padding-top:9px;border-right:1px solid #dadada;text-align:center;background-color: #f5f5f5;}
+
+#contents .register ul li .register_radio{ margin-left: 8px; margin-right:0; padding-right:0 }
+#contents .register ul li .register_txt { margin-left: 5px; line-height: 30px;vertical-align:top}
+#contents .register ul li .register_txt a{ text-decoration: underline; color:#3879d9;}
+#contents .register ul li .register_txt a:hover{ text-decoration:none; color:#3879d9;}
+#contents .register ul li.register_adr{ height: 83px; padding:0; margin:0;}
+#contents .register ul li.register_adr span { height: 83px; padding:0; margin:0; }
+#contents .register ul li.register_adr span:first-child {  height: 48px !important; padding-top:35px !important; vertical-align:middle}
+#contents .register ul li.register_adr span p { margin-top:0; padding:0}
+#contents .register ul li select{float:left; width:133px;height:23px; line-height:16px; padding:2px; margin:3px 0 0px 5px; vertical-align:top; padding:2px; border:1px solid #dbdbdb;vertical-align:top}
+#contents .register ul li input{margin:8px 3px 0 5px;}
+#contents .register ul li input[type=text]    {float:left; width:128px; padding:2px; margin:3px 3px 0px 5px; height:17px; line-height:16px; vertical-align:top; border:1px solid #dbdbdb}
+#contents .register ul li input[type=password]{float:left; width:128px; padding:2px; margin:3px 3px 0px 5px; height:17px; line-height:16px; vertical-align:top; border:1px solid #dbdbdb}
+#contents .register ul li input[type=image]{margin:3px 3px 0 5px; vertical-align:top;}
+#contents .register ul li input[type=radio]{margin:8px 0 0 0; vertical-align:top;}
+#contents .register ul li input.ipt20{width:20px;}
+#contents .register ul li input.ipt30{width:30px;}
+#contents .register ul li input.ipt50{width:50px;}
+#contents .register ul li input.ipt180{width:180px;}
+#contents .register ul li input.ipt0{width:30px;}
+#contents .register ul li input.ipt1{width:65px;}
+#contents .register ul li input.ipt2{width:30px;}
+#contents .register ul li input.ipt3{width:92px;}
+
+
+/* 신규등록 : 버튼 영역 */
+#contents .search_list{width:100%;margin:10px auto 0 auto}
+#contents .search_list .float_l { float:left; }
+#contents .search_list .float_r { float:right; }
+#contents .search_list select{width:120px;height:24px;padding:0px 0;vertical-align:top;border:1px solid #dbdbdb;color:#8c8c8c}
+#contents .search_list input[type=text]{width:158px;height:20px;padding:1px;vertical-align:top;border:1px solid #dbdbdb}
+
+/* 테이블 상하단 텍스트 */
+#contents .reser-txt { float:left; width:746px; }
+#contents .reser-txt li { line-height:18px; }
+#contents .reser-txt .txt { font-size:12px; font-weight:bold; padding:0 0 10px 0;}
+#contents .reser-txt .txt01 { font-size:12px; font-weight:bold; }
+#contents .reser-txt .txt02 { font-size:11px; padding:5px 0 20px 0;}
+
+/* 팝업 - 01 : 170210 수정*/
+#popup_container {width:100%;padding:10px 0 50px}
+#popup_container .wrapper_pop_400 {width:340px!important; margin:0 auto;}
+#popup_container .wrapper_pop_600 {width:560px!important; margin:0 auto;}
+#popup_container .pop_header { width:100%;padding:0; border-bottom:1px solid #dbdbdb; overflow:hidden; }
+#popup_container .pop_header_btn {float:right; display: inline-block; margin:0 20px 5px 0; }
+#popup_container .pop_title {width:100%; text-align:center; display:bolck; margin:20px 0; }
+#popup_container .pop_title_small {width:100%; text-align:left; display:bolck; margin:10px 0 0 0; font-size:14px; font-weight: bold; }
+#popup_container .pop_btn {width:100%; text-align:center; display:bolck; margin:20px 0; }
+#popup_container .tblinset tr td input[type=radio]{ margin-top:7px !important; margin-right: 3px; vertical-align: top;}
+#popup_container .tblinset tr td input.ipt100{width:100px;}
+#popup_container .tblinset tr td input.ipt120{width:120px;}
+#popup_container .tblinset tr td input.ipt150{width:150px;}
+#popup_container .tblinset tr td input.ipt200{width:250px;}
+#popup_container .tblinset tr td input.ipth20{height:18px;}
+#popup_container .tblinset .pd10{padding:10px 0;}
+#popup_container .tblinset .tableLastBb{border-bottom-color: #ababab }
+#popup_container .tblinset .tdBgcolor{background-color:#f5f5f5;}
+
+
+
+/* 로그인 */
+.mem_login { width:720px; margin:110px auto;border:5px solid #e2e2e2; overflow:hidden; background:url('../images/logo_login.jpg') no-repeat 15% center;  }
+.mem_login .login_box { width:330px; float:right; position:relative; margin:50px 40px 50px 0; overflow:hidden; }
+.mem_login .login_box .input_box { float:left; }
+.mem_login .login_box .input_box input[type=text], input[type=password] { width:180px; border:1px solid #dadada; padding:3px 1px; *padding:3px 1px;}
+.mem_login .login_box .input_box input[type=image] { padding:10px 1px; }
+.mem_login .login_box .input_box input[type=radio] { margin-top:7px; margin-right: 3px; vertical-align: top; }
+.mem_login .login_box .input_box label { margin-right: 10px; }
+
+.mem_login .login_box .input_box dl { width:320px; }
+.mem_login .login_box .input_box dl dt { float:left; width:90px;  font-weight:bold; color:#333; height:38px; line-height:28px; }
+.mem_login .login_box .input_box dl dd { float:left; width:220px; padding-left:5px; height:38px; line-height:26px;  }
+
+.mem_login .login_box .chk_id { clear:both; padding-left:0px; margin-top:10px;}
+.mem_login .login_box .chk_id input { margin-top:0px; vertical-align: top; }
+
+.mem_login .login_box .p_box  { border-top:1px solid #e2e2e2; overflow:hidden; margin-top:10px; padding-top:10px; }
+.mem_login .login_box .p_box p { clear:both; overflow:hidden; font-size:11px;  }
+.mem_login .login_box .p_box p span img{ padding-top:5px;  }
+.mem_login .login_box .p_box p span{ display:block; float:left; vertical-align:bottom; width:263px;  }
+.mem_login .login_box .p_box p a { display:block; float:left; vertical-align:middle; padding-bottom:10px;  }
+
+
+#contents .patent_box{overflow:hidden;margin-top:10px}
+#contents .patent_box ul li.txt{ line-height:18px;}
+#contents .partners_list{overflow:hidden;margin-top:10px}
+#contents .partners_list li{float:left;display:table;width:179px;height:78px;margin:5px 5px 0 0;border:1px solid #dadada;}
+#contents .partners_list li span{display:table-cell;width:100%;height:100%;vertical-align:middle;text-align:center}
+#contents .mt5{margin-top:5px}
+#contents .mt8{margin-top:8px}
+#contents .mt10{margin-top:10px}
+#contents .mt17{margin-top:17px}
+#contents .mt20{margin-top:20px}
+#contents .mt30{margin-top:30px}
+#contents .mt40{margin-top:40px}
+#contents .mt45{margin-top:45px}
+#contents .mt50{margin-top:50px}
+#contents .mt60{margin-top:60px}
+#contents .mb20{margin-bottom:20px}
+#contents .ml5{margin-left:5px}
+#contents .ml10{margin-left:10px}
+#contents .ml20{margin-left:20px}
+#contents .ml50{margin-left:50px}
+#contents .mr30{margin-right:30px}
+#contents .spacer{display:block;height:25px}
+#contents .spacer_50{height:50px}
+#contents .spacer_60{height:60px}
+#contents .spacer_100{height:100px}
+#contents .spacer_6{height:6px}
+#contents .txt_red{color:#e51837}
+#contents .title_red{display:block;margin-top:16px;color:#e51837}
+#contents .title_red.mt20{margin-top:20px}
+#contents .p2{display:block;margin-top:10px;color:#333}
+#contents .p3{margin-top:14px;line-height:24px;font-size:12px;color:#333;} 
+#footer{height:136px;margin-top:50px;border-top:2px solid #e51837;display: inherit;}
+#footer .btnsitemap{float:right}
+#footer ul{float:left;margin-top:20px; margin-bottom:20px;}
+#footer ul li{float:left;margin-left:30px}
+#footer ul li:first-child{margin-left:0}
+#footer .footer_bottom{float:left;clear:both;width:100%;margin-top:29px}
+#footer .footer_bottom a{float:left}
+#footer .footer_bottom .address{float:left;margin-left:55px}
+#footer .footer_bottom .address img{display:block;margin-bottom:6px; margin-right:161px;}
+#footer .footer_bottom .family_site{float:right}
+

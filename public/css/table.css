@@ -1,0 +1,95 @@
+@import "fonts.css";
+
+
+#contents table{ width:100%;border-top:2px solid #e51937}
+#contents table.no-top { width:100%;border-top:0;}
+#contents table th,#contents table td{ border-bottom:1px solid #dadada}
+#contents table th{padding:5px 0;text-align:left;height:18px; color:#404040;}
+#contents table th.bgcolor2{ background-color:#f5f5f5;}
+#contents table td{padding:4px 0 4px 5px; word-break:break-all;}
+#contents table td.board-contents table { table-layout:auto;border-top:0; width:auto;}
+
+
+#contents table td.board-contents table td {padding:0px; line-height:1.4em;border-bottom:0;}
+
+#contents table td input[type=text]{width:169px; line-height:16px;padding:2px; border:1px solid #dadada; }
+#contents table td input.ipt20{width:20px;}
+#contents table td input.ipt30{width:30px;}
+#contents table td input.ipt50{width:50px;}
+#contents table td input.ipt0{width:30px;}
+#contents table td input.ipt1{width:65px;}
+#contents table td input.ipt2{width:30px;}
+#contents table td input.ipt3{width:92px;}
+#contents table td input.ipt4{width:218px;*width:198px;}
+#contents table td input.ipt5{width:122px;*width:102px;}
+#contents table td input.ipt6{width:214px;*width:194px;}
+#contents table td input.ipt7{width:552px;*width:532px;}
+#contents table td input.ipt8{width:114px;*width:94px;}
+#contents table td input.ipt9{width:595px;*width:575px;}
+#contents table td input.ipt10{width:342px;*width:322px;}
+#contents table td input.ipt11{width:296px;*width:276px;}
+#contents table td input.ipt12{width:135px;*width:115px;}
+#contents table td select{width:174px;line-height:12px;text-align:left;border:1px solid #abadb3;padding:1px 0}
+#contents table td select.sel1{width:44px}
+#contents table td select.sel2{width:104px}
+#contents table td select.sel3{width:57px}
+#contents table td select.sel4{width:130px}
+#contents table td select.sel5{width:67px}
+#contents table td textarea{width:602px;*width:580px;height:86px;padding:2px;border:1px solid #ddd; margin-left:0;}
+#contents table td textarea.txtarea1{height:55px}
+#contents table td textarea.txtarea2{height:183px}
+#contents table td textarea.txtarea3{height:100px;}
+#contents table td textarea.txtarea4{height:195px}
+#contents table td a img{vertical-align:middle;}
+#contents table td .fleft{float:left}
+#contents table td .btncalendar{float:left;margin:3px 5px}
+#contents table td .iconcalendar{margin-top:3px}
+#contents table td .hyphen{float:left;width:22px;padding-top:5px;text-align:center}
+#contents table td .blank{float:left;width:10px;}
+#contents table .row{margin-bottom:10px}
+#contents table td .lbl{vertical-align:top}
+#contents table td ul.addr-align li { float:left; }
+
+#contents .tblsub th{width:128px;padding-left:0;text-indent:30px}
+
+/*기본테이블 사용*/
+#contents .tblinset{border-top:1px solid #e51937;}
+#contents .tblinset thead th{line-height:18px;font-size:13px; font-weight: 800; background-color: #d9d9d9; border-bottom-color: #ababab ;}
+#contents .tblinset th{line-height:16px;font-size:11px}
+#contents .tblinset th,#contents .tblinset td{border-left:1px solid #ddd}
+#contents .tblinset th:first-child,#contents .tblinset td:first-child{border-left:none}
+#contents .tblinset th.tblinset_tit{font-size:13px;}
+#contents .tblinset th{padding:8px 0 8px 0;text-align:center; background-color:#f5f5f5;}
+#contents .tblinset td{line-height:16px;font-size:11px}
+#contents .tblinset td:first-child {text-align: center; padding-left:0 !important;}
+#contents .tblinset td span {vertical-align:top; line-height: 25px; margin-right: 10px}
+#contents .tblinset td input {margin-top:1px !important; margin-right:3px;padding-top:0 !important;vertical-align:top;}
+#contents .tblinset td input[type=text]{margin-top:2px !important; padding-top:0 !important;vertical-align:top;}
+#contents .tblinset td input[type=radio]{margin-top:3px !important; padding-top:0 !important;vertical-align:top;}
+#contents .tblinset td.ct{ text-align:center; padding-left:0}
+#contents .tblinset td.lf{ text-align:left; padding-left:15px !important;}
+#contents .tblinset td.lf input[type=radio]{ margin-top:5px !important; padding-top:0 !important; vertical-align:top;}
+#contents .tblinset td.gray{ background-color:#f5f5f5;}
+#contents .tblinset td .f12{font-size:12px}
+#contents .tblinset td.height_fix{ height: 20px !important; }
+#contents .tblinset td.col1{padding-left:5px;vertical-align:middle}
+#contents .tblinset td strong{display:block;margin-bottom:18px}
+#contents .tblinset tr.colored td{text-align:center;background:#f7f7f7}
+
+/*테이블 속 리스트박스*/
+#contents .tblinset .tblinset_listBox{line-height:18px; width:98%; height: 400px; border:1px solid #ddd; margin: 0 5px; padding:10px; box-sizing: border-box; overflow: auto; overflow-x: hidden; }
+#contents .tblinset .tblinset_listBox ul {display:block;width: 100%;}
+#contents .tblinset .tblinset_listBox ul li {display:block; width: 100%; margin:3px 0;}
+#contents .tblinset .tblinset_listBox ul li.tblinset_listBtn:hover, 
+#contents .tblinset .tblinset_listBox ul li.on {  text-decoration:none; background-color: #ddd; cursor: pointer;}
+
+
+/*new_reserve */
+#contents table td input.ipt11{width:82px; background:url("../images/icon/calendar.png") no-repeat right; background-color: #fff; cursor: pointer; padding: 3px; background-position: 69px;}
+table.reserve_table{background: #fff; border: 1px solid #e6e6e6 !important;    margin-top: 8px;}
+#contents table td select.sel100{width:44px;    height: 24px; border: 1px solid #dadada;}
+#contents table td select.ml5{margin-left: 5px !important;}
+#contents table.reserve_table td{border:none;}
+#contents table.reserve_table th{text-align: center; font-size: 100%;padding: 0; border-right: 1px solid #e6e6e6; border-bottom: none; background: #d9d9d9;}
+#contents table.reserve_table td.pd_10{padding:10px !important;}
+

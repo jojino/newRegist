@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-ｅquiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SK렌터카 - 신규등록 관리 시스템</title>
+	<link type="text/css" rel="stylesheet" href="/css/reset.css">
+	<link type="text/css" rel="stylesheet" href="/css/main.css">
+	<link type="text/css" rel="stylesheet" href="/css/style.css">
+	<link type="text/css" rel="stylesheet" href="/css/board.css">
+	<link type="text/css" rel="stylesheet" href="/css/table.css">
+	<link type="text/css" rel="stylesheet" href="/css/common.css">
+	<link type="text/css" rel="stylesheet" href="/css/jquery-ui.css"><!-- 달력 css -->
+
+	<script type="text/javascript" src="/js/gnb.js"></script>
+	<script language="javascript" src="/js/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.js"></script><!-- 달력 js -->
+
+</head>
+<body>
+	<% include ../common/header %>
+
+  <script type="text/javascript" src="/js/user/user.js"></script>
+<script>
+var screen = $("<li'/>");
+screen.attr("class", "m1 on");
+screen.removeClass('m1 on').addClass('m1');
+
+var screen2 = $("<li'/>");
+screen2.attr("class", "m2");
+screen2.removeClass('m2').addClass('m2 on');
+gnb(2,0);
+</script>
+
+<script type="text/javascript">
+	var color_old;
+	var jobGb = "I"; // 등록이냐 수정 구분 변수
+	var pwdGb = "N"; // 패스워드 수정 구분 변수
+
+	window.onload = function() {
+
+	    var resultCnt = $userList;
+	    if (resultCnt < 1) {
+	    	alert("조회된 결과가 없습니다.");
+	    	return;
+	    }
+
+	    $("tr.attention").bind('mouseover', function(event) {
+			color_old = $(this).css('background-color');
+			$(this).css('background-color', '#F5F5DC');
+		});
+		$("tr.attention").bind('mouseout', function(event) {
+			$(this).css('background-color', color_old);
+		});
+	}
+
+	function fn_id_Check(inputId) {
+
+		var userId = document.forms.joinForm.userId;
+
+		if(userId.value == "") {
+			alert("중복확인에러 : 아이디를 입력하세요");
+			return;
+		}
+
+		url = "<c:url value='idCheck.do?id='/>"+userId.value;
+
+		open(url, "confirm", "toolbar=no, location=no, staus=no, menubar=no, scrollbars=no, resizable=no, width=300, height=160");
+	}
+
+	function fn_main_Move(){
+		if(fn_check()){
+
+			var frm = document.forms.joinForm;
+			frm.jobGb.value = jobGb;
+			frm.pwdGb.value = pwdGb;
+			if( $("#corp_cd option:selected").val() != "") {
+				frm.corp.value = $("#corp_cd option:selected").val();
+			} else {
+				frm.corp.value = $('input:radio[name="corpCd"]').val();
+			}
+		    frm.action = "<c:url value='/actionJoin.do'/>";
+		    frm.submit();
+		}
+	}
+
+	function fn_goSearch() {
+
+		document.searchForm.pageIndex.value = 1;
+		document.searchForm.action = "<c:url value='/userManage.do'/>";
+	   	document.searchForm.submit();
+	}
+
+	/* ********************************************************
+	 * 페이징 처리 함수
+	 ******************************************************** */
+	function fn_egov_pageview(pageNo){
+		document.searchForm.pageIndex.value = pageNo;
+		document.searchForm.action = "<c:url value='/userManage.do'/>";
+	   	document.searchForm.submit();
+	}
+
+	function fn_view_user(index) {
+
+		jobGb = "U";
+
+		<c:forEach items="${userList}" var="user" varStatus="status">
+
+			if(${status.count} == index) {
+				var corpCd = '${user.corpCd}';
+
+				if(corpCd != "oncar") {
+					// 셀렉트박스에 선택한 corpCd값 설정후 selected
+					$('#corp_cd option[value='+corpCd+']').prop('selected', 'selected');
+					$("#corp_cd").attr("disabled", "true");
+					$('input:radio[name="corpCd"]').eq(0).prop("checked", false);
+					// 변경할 수 없게 disable처리
+					$('input:radio[name="corpCd"]').eq(0).attr("disabled", "true");
+
+				} else {
+					// 셀렉트박스 초기화 후 라디오버튼 checked
+					$('#corp_cd option:eq(0)').prop('selected', 'selected');
+					$('input:radio[name="corpCd"]').eq(0).prop("checked", true);
+					// 변경할 수 없게 disable처리
+					$('input:radio[name="corpCd"]').eq(0).attr("disabled", "true");
+				}
+
+				$("input:radio[name='userGb']").val('${user.userGb}');
+				// userGb 값에 따라 라디오버튼 설정
+				if($(":radio[name='userGb']").val() == "ROLE_ADMIN") {
+					$(":radio[name='userGb']").eq(0).prop("checked", "true");
+				} else {
+					$(":radio[name='userGb']").eq(1).prop("checked", "true");
+				}
+
+				$("#user_name").val('${user.userNm}');
+				$("#user_id").val('${user.userId}').prop("readOnly", true);
+				// 중복확인 버튼 숨기기
+				$("#idCheck").css('display', 'none');
+				$("#userPwd").val('       ');
+				$("#rePwd").val('       ');
+				$("#callNo").val('${user.phoneNo}');
+				$("#email").val('${user.email}');
+				$("input:radio[name='useYN']").val('${user.useYN}');
+				// useYN 값에 따라 라디오버튼 설정
+				if($(":radio[name='useYN']").val() == "1") {
+					$(":radio[name='useYN']").eq(0).prop("checked", "true");
+				} else {
+					$(":radio[name='useYN']").eq(1).prop("checked", "true");
+				}
+			}
+
+		</c:forEach>
+	}
+
+	// 권한 변경
+	function fn_gb_change1() {
+		if($(".userGb:checked")) {
+			$(":radio[name='userGb']").val("ROLE_ADMIN");
+		}
+	}
+
+	function fn_gb_change2() {
+		if($(".userGb:checked")) {
+			$(":radio[name='userGb']").val("ROLE_USER");
+		}
+	}
+
+	// 사용여부 변경
+	function fn_use_change1() {
+		if($(".useYN:checked")) {
+			$(":radio[name='useYN']").val("1");
+		}
+	}
+
+	function fn_use_change2() {
+		if($(".useYN:checked")) {
+			$(":radio[name='useYN']").val("0");
+		}
+	}
+
+	function fn_pwd_change() {
+		// onchange 이벤트가 호출되면 패스워드 변경된것으로 확인
+		pwdGb = "Y";
+	}
+
+	function fn_filter_number(event) {
+		var code = event.keyCode;
+		// 숫자 허용
+		if(code > 47 && code < 58) {
+			return;
+		}
+		// 점 입력 허용
+		if (code === 110 || code === 190) {
+		    return;
+		}
+		// 단축키 입력 허용
+		if(event.ctrlKey || event.altKey) {
+			return;
+		}
+		// 특수 키 입력 허용
+		if (code === 9 || code === 36 || code === 35 || code === 37 ||
+      		code === 39 || code === 8 || code === 46) {
+    		return;
+  		}
+
+		event.preventDefault();
+	}
+
+</script>
+
+<!-- Container -->
+<div id="container">
+	<div class="wrapper">
+		<!-- Contents -->
+		<div id="contents">
+
+			<!-- 검색영역 -->
+			<form name="searchForm" method="post">
+			<div class="rental_search pt30">
+				<div class="rq_top">
+					<ul>
+						<li>
+							<span>이  름</span>
+							<input type="text" name="userNm" title="userNm"/>
+						</li>
+						<li>
+							<span>아 이 디</span>
+							<input type="text" name="userId" title="userId"/>
+						</li>
+						<li>
+							<span>전화번호</span>
+							<input type="text" name="phoneNo" title="phoneNo" style="ime-mode:disabled;" onkeydown="fn_filter_number(event);"/>
+						</li>
+						<li class="btns_right">
+							<input type="image" src="/images/btn/btn_search_reset.png" alt="검색 초기화" title="검색 초기화" onclick="javascript:fn_reset(); return false;">
+							<input type="image" src="/images/btn/btn_search_red.png" alt="검색" title="검색" onclick="javascript:fn_goSearch();">
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 검색영역 -->
+
+
+			<!-- 테이블 영역 -->
+			<div class="tblinset_box page_top_1 pt20">
+				<table class="tblinset">
+					<colgroup>
+						<col width="5%"/>
+						<col width="20%"/>
+						<col width="15%"/>
+						<col width="11%"/>
+						<col width="14%"/>
+					  <col width="25%"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>No</th>
+							<th>회사명</th>
+							<th>담당자명</th>
+							<th>아이디</th>
+							<th>일반전화</th>
+						  <!-- <th>휴대전화</th>
+							<th>FAX</th> -->
+							<th>이메일</th>
+						</tr>
+						<% if(users == null || users.length == 0) { %>
+						<tr>
+							<div class="noData" colspan=100> There is no user yet.</div>
+						</tr>
+						<% } %>
+						<% users.forEach(function(user) { %>
+						<tr class="attention" style="cursor:pointer"  onclick="javascript:fn_view_user(); return false;">
+              <td><input type="radio" name="" value=""/></td>
+							<td><%=user.corpCd %></td>
+							<td><%=user.userNm %></td>
+							<td><%=user.userId %></td>
+							<td><%=user.userPhone %></td>
+							<td><%=user.userEmail %></td>
+						</tr>
+            <% }) %>
+					</tbody>
+				</table>
+
+				<!-- page nav -->
+        <div class="page-wrap">
+				<ul class="page-list">
+					<li class="page1 pgEmpty"><a href="#"><img src="/images/btn/btn_first.gif" alt="first"></a></li>
+					<li class="page1 pgEmpty"><a href="#"><img src="/images/btn/btn_prev.gif" alt="prev"></a></li>
+					<!-- 선택된 page li class="now" 추가 / Data 갯수만큼 li 추가 -->
+					<li class="page now"><a href="#">1</a></li>
+					<li class="page"><a href="#">2</a></li>
+					<li class="page"><a href="#">3</a></li>
+					<li class="page1"><a href="#"><img src="/images/btn/btn_next.gif" alt="next"></a></li>
+					<li class="page1"><a href="#"><img src="/images/btn/btn_last.gif" alt="last"></a></li>
+				</ul>
+			  </div>
+				<!-- //page nav -->
+			</div>
+			<!-- //테이블 영역 -->
+			</form>
+
+			<!-- 등록 영역 -->
+			<div class="register">
+				<div class="register_rig">
+					<form name="joinForm" action="/manage/user/actionjoin" method="post">
+						<input type="hidden" name="jobGb"/>
+						<input type="hidden" name="pwdGb"/>
+						<input type="hidden" name="corp"/>
+						<ul>
+							<li><span class="size11"><strong>회사명</strong></span>
+								<span>
+									<select name="corpCd" title="회사명" onchange="javascript:fn_corp_reset(1)">
+                    <option value="">발주사 선택</option>
+										<option value="">목록</option>
+										<option value="">목록</option>
+										<option value="">목록</option>
+										<option value="">목록</option>
+										<option value="">목록</option>
+										<option value="">목록</option>
+									</select>
+								</span>
+								<span class="size11 register_radio"><input type="radio" name="corpCd" value="oncar" onClick="javascript:fn_corp_reset(2);"/></span><span class="size11 register_txt">온카</span>
+							</li>
+							<li><span class="size11"><strong>권한</strong></span>
+								<span class="size11 register_radio"><input type="radio" name="userGb" value="ROLE_ADMIN" class="userGb" onchange="javascript:fn_gb_change1();"/></span><span class="size11 register_txt">관리자</span>
+								<span class="size11 register_radio"><input type="radio" name="userGb" value="ROLE_USER" class="userGb" onchange="javascript:fn_gb_change2();"/></span><span class="size11 register_txt">사용자</span>
+							</li>
+							<li><span class="size11"><strong>이름</strong></span>
+								<span><input type="text" name="userNm" value="" title="이름"></span>
+							</li>
+							<li><span class="size11"><strong>아이디</strong></span>
+								<span><input type="text" name="userId" value="" title="아이디"></span><span class="size11 register_txt"><a href="javascript:fn_id_Check(this.form);" id="idCheck">중복확인</a></span>
+							</li>
+							<li><span class="size11"><strong>비밀번호</strong></span>
+								<span><input type="password" name="userPwd" title="비밀번호" onchange="javascript:fn_pwd_change(); return false;"></span>
+							</li>
+							<li><span class="size11"><strong>비밀번호 확인</strong></span>
+								<span><input type="password" name="rePwd" value="" title="비밀번호 확인" onchange="javascript:fn_pwd_Check(); return false;"></span>
+							</li>
+							<li><span class="size11"><strong>일반전화</strong></span>
+								<span><input type="text" name="userPhone" value="" title="일반전화" style="ime-mode:disabled;" onkeydown="fn_filter_number(event);"></span>
+							</li>
+							<!-- <li><span class="size11"><strong>휴대전화</strong></span>
+								<span><input type="text" name="" value="" title="휴대전화"></span>
+							</li>
+							<li><span class="size11"><strong>FAX</strong></span>
+								<span><input type="text" name="" value="" title="FAX"></span>
+							</li>-->
+							<li><span class="size11"><strong>이메일</strong></span>
+								<span><input type="text" name="userEmail" title="이메일" onchange="javascript:fn_email_Check(); return false;"></span>
+							</li>
+							<li><span class="size11"><strong>사용여부</strong></span>
+								<span class="size11 register_radio"><input type="radio" name="useGb" value="1" class="useGb" onchange="javascript:fn_use_change1();"/></span><span class="size11 register_txt">사용</span>
+								<span class="size11 register_radio"><input type="radio" name="useGb" value="0" class="useGb" onchange="javascript:fn_use_change2();"/></span><span class="size11 register_txt">미사용</span>
+							</li>
+						</ul>
+						<span class="register_btn"><input type="image" src="/images/btn/btn_resister.png" alt="등록" title="등록" onclick="javascript:fn_main_Move(); return false;"></span>
+					</form>
+				</div>
+			</div>
+			<!-- //등록 영역 -->
+			<div class="clearBoth"></div>
+
+		</div>
+		<!-- Contents -->
+	</div>
+	<!-- //Wrapper -->
+</div>
+<!-- //Container -->
+<% include ../common/footer %>
+</body>
+</html>
