@@ -9,7 +9,7 @@
   <script type="javascript">
     function fn_main_Move() {
       var loginForm = document.form.loginForm;
-      loginForm.action = "/index";
+      loginForm.action = "/login";
       loginForm.submit();
     }
 
@@ -23,7 +23,7 @@
   		<!-- Contents -->
   		<div id="contents">
 
-  			<form name="loginForm" action="#LINK" method="post">
+  			<form name="loginForm" action="/login" method="post">
   				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   				<div class="mem_login">
   					<div class="login_box">
@@ -31,13 +31,13 @@
   							<dl>
   								<dt>사용자 구분</dt>
   								<dd>
-  									<input type="radio" name="corpCd" value="sk"><label>SK 렌트카</label>
-  									<input type="radio" name="corpCd" value="oncar"><label>온카</label>
+  									<input type="radio" name="login[corpCd]" value="sk"><label>SK 렌트카</label>
+  									<input type="radio" name="login[corpCd]" value="oncar"><label>온카</label>
   								</dd>
   								<dt>아이디</dt>
-  								<dd><input name="userId" type="text" class="input" id="userId" /></dd>
+  								<dd><input name="login[userId]" type="text" class="input" id="userId" /></dd>
   								<dt>비밀번호</dt>
-  								<dd><input name="userPwd" type="password" class="input" id="userPwd" /></dd>
+  								<dd><input name="login[userPw]" type="password" class="input" id="userPwd" /></dd>
   							</dl>
   						</div>
   						<div>

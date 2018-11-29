@@ -3,13 +3,13 @@ var mongoose = require('mongoose');
 // schema
 var userSchema = mongoose.Schema({
   corpCd:{type:String, required:true, unique:true},
-  userGb:{type:String},
+  userAuth:{type:String},
   userNm:{type:String, required:[true, "Name is required!"]},
   userId:{type:String, required:[true, "UserId is required!"], unique:true},
-  userPwd:{type:String, required:[true, "Password us required!"], select:false},
+  userPw:{type:String, required:[true, "Password us required!"], select:false},
   userPhone:{type:String},
   userEmail:{type:String},
-  useGb:{type:String}
+  useYN:{type:String}
 }, {
   toObject:{virtuals:true}
 });
@@ -32,7 +32,7 @@ userSchema.virtual("newPassword")
 .set(function(value) {this._newPassword=value;});
 
 // password validation
-userSchema.path("userPwd").validate(function(v) {
+userSchema.path("userPw").validate(function(v) {
   var user = this;
 
   // create user
