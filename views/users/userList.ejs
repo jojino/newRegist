@@ -55,7 +55,7 @@ gnb(2,0);
 	}
 
 	function fn_id_Check(inputId) {
-
+		console.log("여기타니???????");
 		var userId = document.forms.joinForm.userId;
 
 		if(userId.value == "") {
@@ -264,21 +264,17 @@ gnb(2,0);
 							<th>FAX</th> -->
 							<th>이메일</th>
 						</tr>
-						<% if(users == null || users.length == 0) { %>
 						<tr>
 							<div class="noData" colspan=100> There is no user yet.</div>
 						</tr>
-						<% } %>
-						<% users.forEach(function(user) { %>
 						<tr class="attention" style="cursor:pointer"  onclick="javascript:fn_view_user(); return false;">
               <td><input type="radio" name="" value=""/></td>
-							<td><%=user.corpCd %></td>
-							<td><%=user.userNm %></td>
-							<td><%=user.userId %></td>
-							<td><%=user.userPhone %></td>
-							<td><%=user.userEmail %></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
-            <% }) %>
 					</tbody>
 				</table>
 
@@ -320,26 +316,26 @@ gnb(2,0);
 										<option value="">목록</option>
 									</select>
 								</span>
-								<span class="size11 register_radio"><input type="radio" name="corpCd" value="oncar" onClick="javascript:fn_corp_reset(2);"/></span><span class="size11 register_txt">온카</span>
+								<span class="size11 register_radio"><input type="radio" name="user[corpCd]" value="oncar" onClick="javascript:fn_corp_reset(2);"/></span><span class="size11 register_txt">온카</span>
 							</li>
 							<li><span class="size11"><strong>권한</strong></span>
-								<span class="size11 register_radio"><input type="radio" name="userGb" value="ROLE_ADMIN" class="userGb" onchange="javascript:fn_gb_change1();"/></span><span class="size11 register_txt">관리자</span>
-								<span class="size11 register_radio"><input type="radio" name="userGb" value="ROLE_USER" class="userGb" onchange="javascript:fn_gb_change2();"/></span><span class="size11 register_txt">사용자</span>
+								<span class="size11 register_radio"><input type="radio" name="user[userAuth]" value="CA" class="userGb" onchange="javascript:fn_gb_change1();"/></span><span class="size11 register_txt">관리자</span>
+								<span class="size11 register_radio"><input type="radio" name="user[userAuth]" value="CU" class="userGb" onchange="javascript:fn_gb_change2();"/></span><span class="size11 register_txt">사용자</span>
 							</li>
 							<li><span class="size11"><strong>이름</strong></span>
-								<span><input type="text" name="userNm" value="" title="이름"></span>
+								<span><input type="text" name="user[userNm]" value="" title="이름"></span>
 							</li>
 							<li><span class="size11"><strong>아이디</strong></span>
-								<span><input type="text" name="userId" value="" title="아이디"></span><span class="size11 register_txt"><a href="javascript:fn_id_Check(this.form);" id="idCheck">중복확인</a></span>
+								<span><input type="text" name="user[userId]" value="" title="아이디"></span><span class="size11 register_txt"><a href="javascript:fn_id_Check(this.form);" id="idCheck">중복확인</a></span>
 							</li>
 							<li><span class="size11"><strong>비밀번호</strong></span>
-								<span><input type="password" name="userPwd" title="비밀번호" onchange="javascript:fn_pwd_change(); return false;"></span>
+								<span><input type="password" name="user[userPw]" title="비밀번호" onchange="javascript:fn_pwd_change(); return false;"></span>
 							</li>
 							<li><span class="size11"><strong>비밀번호 확인</strong></span>
-								<span><input type="password" name="rePwd" value="" title="비밀번호 확인" onchange="javascript:fn_pwd_Check(); return false;"></span>
+								<span><input type="password" name="user[rePwd]" value="" title="비밀번호 확인" onchange="javascript:fn_pwd_Check(); return false;"></span>
 							</li>
 							<li><span class="size11"><strong>일반전화</strong></span>
-								<span><input type="text" name="userPhone" value="" title="일반전화" style="ime-mode:disabled;" onkeydown="fn_filter_number(event);"></span>
+								<span><input type="text" name="user[userPhone]" value="" title="일반전화" style="ime-mode:disabled;" onkeydown="fn_filter_number(event);"></span>
 							</li>
 							<!-- <li><span class="size11"><strong>휴대전화</strong></span>
 								<span><input type="text" name="" value="" title="휴대전화"></span>
@@ -348,11 +344,11 @@ gnb(2,0);
 								<span><input type="text" name="" value="" title="FAX"></span>
 							</li>-->
 							<li><span class="size11"><strong>이메일</strong></span>
-								<span><input type="text" name="userEmail" title="이메일" onchange="javascript:fn_email_Check(); return false;"></span>
+								<span><input type="text" name="user[userEmail]" title="이메일" onchange="javascript:fn_email_Check(); return false;"></span>
 							</li>
 							<li><span class="size11"><strong>사용여부</strong></span>
-								<span class="size11 register_radio"><input type="radio" name="useGb" value="1" class="useGb" onchange="javascript:fn_use_change1();"/></span><span class="size11 register_txt">사용</span>
-								<span class="size11 register_radio"><input type="radio" name="useGb" value="0" class="useGb" onchange="javascript:fn_use_change2();"/></span><span class="size11 register_txt">미사용</span>
+								<span class="size11 register_radio"><input type="radio" name="user[useYN]" value="1" class="useGb" onchange="javascript:fn_use_change1();"/></span><span class="size11 register_txt">사용</span>
+								<span class="size11 register_radio"><input type="radio" name="user[useYN]" value="0" class="useGb" onchange="javascript:fn_use_change2();"/></span><span class="size11 register_txt">미사용</span>
 							</li>
 						</ul>
 						<span class="register_btn"><input type="image" src="/images/btn/btn_resister.png" alt="등록" title="등록" onclick="javascript:fn_main_Move(); return false;"></span>

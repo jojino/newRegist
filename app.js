@@ -5,10 +5,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var path = require('path');
 var app = express(); // express를 실행하여 app object를 초기화
-var passport = require('passport'); // 계정관리를 할때 쓰임(strategy 방식 사용)
 var session = require('express-session'); // 로그인 데어티를 관리
 var flash = require('connect-flash'); // session에 자료를 flash로 저장
-var async = require('async');
 
 // DB 셋팅
 // 1. 환경변수에 저장된 값을 사용하여 mongoDB에 접속
@@ -33,58 +31,33 @@ app.use(bodyParser.json()); // jsonData
 app.use(bodyParser.urlencoded({extended:true})); // urlencoded data를 분석해서 req.body생성
 app.use(methodOverride("_method")); // _method의 query로 들어오는 값으로 HTTP method를 바꿈
 app.use(flash());
-
 app.use(session({secret:"MySecret"}));  // 암호화시 비밀 키 값
+
+// passport
+var passport = require('./config/passport'); // 계정관리를 할때 쓰임(strategy 방식 사용)
 app.use(passport.initialize());
 app.use(passport.session());
 
-// session생성 시 db사용자의 id를 저장
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-// session으로부터 개체를 가져올때 설정하는 것으로 id를 넘겨받아 DB에서 user를 찾음
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-var LocalStrategy = require('passport-local').Strategy;
-passport.use('local-login',
-  new LocalStrategy({
-      usernameField : 'userId',
-      passwordField : 'userPw',
-      passReqToCallback : true
-    },
-    function(req, userId, userPw, done) {
-      User.findOne({'userId': userId}, function(err, user) {
-        if(err) return done(err);
-
-        if(!user) {
-          req.flash("userId", req.body.userId);
-          return done(null, false, req.flash('loginError', 'No user found'));
-        }
-        if(user.passsword != userPw) {
-          req.flash('userId', req.body.userPw);
-          return done(null, false, req.flash('loginError', 'Password does not Match'));
-        }
-        return done(null, user);
-      });
-    }
-  )
-);
-
-
 // Routes
-app.use("/manage/user", require("./routes/users"));
+app.use('/', require('./routes/home'));
+app.use('/manage/user', require('./routes/users'));
+// session생성 시 db사용자의 id를 저장
 
-app.get("/", function(req, res) {
-  res.redirect("/index");
+app.get('/', function(req, res) {
+  res.redirect('/index');
 });
-
 app.get("/index", function(req, res) {
   res.render("index");
 });
+
+/*
+app.get("/newRegist", function(req, res) {
+  User.find({}).sort('-createdAt').exec(function(err, posts) {
+    if(err) return res.json({success:false, message:err});
+    res.render("/index", {data:posts, user:req.user});
+  });
+});
+*/
 
 app.post("/index", function(req, res) {
 
@@ -103,55 +76,6 @@ app.get("/manage", function(req, res) {
     res.render("users/userList");
   //});
 });
-
-// 로그인 루트
-app.get('/login', function(req, res) {
-  res.render('login/login', {userId:req.flash("userId")[0], loginError:req.flash('loginError')})
-});
-app.post('/login',
-  function(req, res, next) {
-    req.flash("useId");
-    if(req.body.userId.length === 0 || req.body.userPw.length === 0) {
-      req.flash("userId", req.body.userId);
-      req.flash("loginError", "Please enter both id and password.");
-      res.redirect('/index');
-    } else {
-      next();
-    }
-  }, passport.authenticate('local-login', {
-    successRedirect : '/newRegist',
-    failureRedirect : '/index',
-    failureFlash : true
-  })
-);
-app.get('/logout', function(req, res) {
-  req.logout();
-  req.redirect('/index');
-});
-
-
-// DB Schema
-// mongoose.Schema 함수를 사용해서 schema object생성
-var registSchema = mongoose.Schema({
-  corpNm:{type:String},
-  conNo:{type:String, required:true, unique:true},
-  carSt:{type:String},
-  makerNm:{type:String},
-  modelNm:{type:String},
-  vidNo:{type:String},
-  carNo:{type:String},
-  cusNm:{type:String},
-  relNm:{type:String},
-  conDt:{type:String},
-  relDt:{type:String},
-  regDt:{type:String},
-  carNoAddr:{type:String},
-  tmpLpnGb:{type:String}
-});
-// mongoose.model 함수를 사용하여 contact schema의 model을 생성
-// 첫번쨰 파라미터 : mongoDB에서 사용될 document이름
-// 두번쨰 파라미터 : 프로그램에서 설정한 schma
-var Contact = mongoose.model("newregist", registSchema);
 
 
 

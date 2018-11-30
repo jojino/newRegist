@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
 
 // schema
 var userSchema = mongoose.Schema({
-  corpCd:{type:String, required:true, unique:true},
+  corpCd:{type:String, required:true},
   userAuth:{type:String},
   userNm:{type:String, required:[true, "Name is required!"]},
   userId:{type:String, required:[true, "UserId is required!"], unique:true},
@@ -13,11 +14,28 @@ var userSchema = mongoose.Schema({
 }, {
   toObject:{virtuals:true}
 });
+userSchema.pre("save", function(next) {
+  var user = this;
+  // DB값과 비교
+  if(!user.isModified("userPw")) {
+    return next();
+  } else {
+    user.userPw = bcrypt.hashSync(user.userPw);
+    return next();
+  }
+});
+userSchema.methods.authenticate = function(userPw) {
+  var user = this;
+  return bcrypt.compareSync(userPw, user.userPw);
+};
+
+var User = mongoose.model("user", userSchema);
 
 // virtuals - DB에 값이 저장이 되지 않음
+/*
 userSchema.virtual("rePwd")
-.get(function() {return this.rePwd;})
-.set(function(value) {this.rePwd=value; });
+.get(function() {return this.user.rePwd;})
+.set(function(value) {this.user.rePwd=value; });
 
 userSchema.virtual("originalPassword")
 .get(function() {return this._originalPassword;})
@@ -30,6 +48,7 @@ userSchema.virtual("currentPassword")
 userSchema.virtual("newPassword")
 .get(function() {return this._newPassword;})
 .set(function(value) {this._newPassword=value;});
+*/
 
 // password validation
 userSchema.path("userPw").validate(function(v) {
@@ -37,28 +56,30 @@ userSchema.path("userPw").validate(function(v) {
 
   // create user
   if(user.isNew) {
+    console.log("패스워드 == " + user.userPw);
+    console.log("패스워드재입력 == " + user.rePwd);
     if(!user.rePwd) {
       user.invalidate("rePwd", "rePwd Confimation is required!");
     }
-    if(user.userPwd !== user.rePwd) {
+    if(user.userPw !== user.rePwd) {
       user.invalidate("rePwd", "rePwd Confimation does not matched!");
     }
   }
 
   // update user
   if(!user.isNew) {
-    if(!user.currentPassword) {
+    if(!user.rePwd) {
       user.invalidate("currentPassword", "Current Password is required!");
     }
     if(user,currentPassword && user.currentPassword != user.originalPassword) {
       user.invalidate("currentPassword", "Current Password us invalid!");
     }
-    if(user.newPassword !== user.rePwd) {
+    if(user.userPw !== user.rePwd) {
       user.invalidate("rePwd", "Password Confimation does not matched!");
     }
   }
 });
 
 // model & export
-var User = mongoose.model("user", userSchema);
+
 module.exports = User;
